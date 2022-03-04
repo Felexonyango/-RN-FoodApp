@@ -1,19 +1,33 @@
 
 import React, { useState } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, Text, TextInput, TouchableOpacity, View,Switch } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './style'
  import {signIn} from "../../firebase/config"
+ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default function LoginScreen({navigation}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const [showPass, setshowpass] = useState(true);
+
+   const toggleSwitch=()=> {
+       setshowpass(false)
+      
+      }
+
     const onFooterLinkPress = () => {
         navigation.navigate('Registration')
     }
     const handleSignIn = async () => {
-        await signIn(user.email, user.password);
+        try{
+            await signIn(email.trim(), password);
+        }
+        catch(error){
+            console.log(error)
+        }
+       
     }
 
   
@@ -34,17 +48,27 @@ export default function LoginScreen({navigation}) {
                     value={email}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
+                    
                 />
+       
                 <TextInput
                     style={styles.input}
                     placeholderTextColor="#aaaaaa"
-                    secureTextEntry
+                    secureTextEntry={!showPass}
                     placeholder='Password'
                     onChangeText={(text) => setPassword(text)}
                     value={password}
+                    autoCompleteType="password"
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
-                />
+
+      
+                   />
+                     <Switch
+                    onValueChange={toggleSwitch}
+                    value={!showPass}
+                    /> 
+                
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => handleSignIn()}>

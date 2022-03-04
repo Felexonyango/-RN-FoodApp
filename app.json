@@ -28,5 +28,18 @@
     "web": {
       "favicon": "./assets/favicon.png"
     }
+  },
+  
+  "expo": {
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "userInterfaceStyle": "automatic"
+    },
+    "android": {
+      "userInterfaceStyle": "automatic"
+    }
   }
+  
+  
 }
+

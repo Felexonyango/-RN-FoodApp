@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, Text, TextInput, TouchableOpacity, View,Switch } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import firebase,{auth,signUp} from '../../firebase/config';
 import styles from './style';
@@ -10,7 +10,12 @@ export default function RegistrationScreen({navigation}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
- 
+    const [showPass, setshowpass] = useState(true);
+
+    const toggleSwitch=()=> {
+        setshowpass(false)
+       
+       }
     const onFooterLinkPress = () => {
         navigation.navigate('Login')
     }
@@ -26,7 +31,7 @@ export default function RegistrationScreen({navigation}) {
         } catch (error) {
             alert(error.message);
         }
-        console.log(auth.currentUser.uid)
+        // console.log(auth.currentUser.uid)
      
 
         firebase.firestore().collection('users').doc(auth.currentUser.uid).set({
@@ -34,7 +39,7 @@ export default function RegistrationScreen({navigation}) {
             email: user.email,
             uid: auth.currentUser.uid,
         }).then(() => {
-            console.log('hello create user ok')
+            alert("user created")
         }).catch((err) => {
             alert('err' + err)
         })
@@ -70,26 +75,35 @@ export default function RegistrationScreen({navigation}) {
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
-                <TextInput
+           
+                   <TextInput
                     style={styles.input}
                     placeholderTextColor="#aaaaaa"
-                    secureTextEntry
+                    secureTextEntry={!showPass}
                     placeholder='Password'
                     onChangeText={(text) => setPassword(text)}
                     value={password}
+                    autoCompleteType="password"
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
-                />
+
+      
+                   />
+                  
                 <TextInput
                     style={styles.input}
                     placeholderTextColor="#aaaaaa"
-                    secureTextEntry
+                    secureTextEntry={!showPass}
                     placeholder='Confirm Password'
                     onChangeText={(text) => setConfirmPassword(text)}
                     value={confirmPassword}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
+                   <Switch
+                    onValueChange={toggleSwitch}
+                    value={!showPass}
+                    /> 
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => handleSignUp()}>

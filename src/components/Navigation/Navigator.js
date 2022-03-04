@@ -17,8 +17,7 @@ import DrawerContainer from '../../screen/DrawerContainer/DrawerContainer';
 import IngredientScreen from '../../screen/Ingredient/IngredientScreen';
 import SearchScreen from '../../screen/Search/SearchScreen'
 import IngredientsDetailsScreen from '../../screen/IngredientsDetails/IngredientsDetailsScreen'
-import  ProfileScreen from  "../../screen/Profile/profileScreen"
-import Logout from "../../screen/Logout/LogoutScreen"
+import  ProfileScreen from  "../../screen/Profile/ProfileScreen"
 import settingScreen from '../../screen/settings/SettingScreen';
 
 LogBox.ignoreLogs([
@@ -75,7 +74,7 @@ export default function App() {
       <AppStack.Screen name='IngredientsDetails' component={IngredientsDetailsScreen} />
         <AppStack.Screen name='profile' component={ProfileScreen}/>
         <AppStack.Screen name='setting'component={settingScreen}/>
-        <AppStack.Screen name='logout' component={Logout}/>
+ 
       </AppStack.Navigator>
     )
   }
@@ -84,7 +83,9 @@ export default function App() {
   const Auth =()=>{
     return(
 
-      <StackAuth.Navigator>
+      <StackAuth.Navigator 
+      screenOptions={{ headerShown: false }}
+      >
       <StackAuth.Screen name='Login'component={LoginScreen}/>
       <StackAuth.Screen name='Registration'component={RegistrationScreen}/>
       </StackAuth.Navigator>

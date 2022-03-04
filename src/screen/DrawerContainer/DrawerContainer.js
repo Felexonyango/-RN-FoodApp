@@ -1,11 +1,34 @@
-import React from "react";
-import { View } from "react-native";
+import React,{useState} from "react";
+import { View,StyleSheet,TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import styles from "./styles";
 import MenuButton from "../../components/MenuButton/MenuButton";
+import { logout } from "../../firebase/config";
+import { Entypo } from '@expo/vector-icons';
 
-export default function DrawerContainer(props) {
-  const { navigation } = props;
+export default function DrawerContainer({navigation}) {
+ //set mode 
+ const [darkMode, setDarkmode] = useState(true)
+
+  const signOutUser = () => {
+   
+        logout()  
+}
+const styles = StyleSheet.create({ // cria a estilização do APP
+  container: {
+    backgroundColor: darkMode ? "#282f3b" : "#f5f5f5",
+  },
+ 
+  darkModeButton: {
+    backgroundColor: darkMode ? "#7b8084" : "#e5e5e5",
+    alignSelf: "flex-start",
+    marginLeft: 20,
+    padding: 10,
+    borderRadius: 30,
+  },
+
+
+});
   return (
     <View style={styles.content}>
       <View style={styles.container}>
@@ -49,14 +72,23 @@ export default function DrawerContainer(props) {
             navigation.closeDrawer();
           }}
         />
-          <MenuButton
+    
+          <MenuButton 
           title="Logout"
-          // source={require("../../../assets/icons/search.png")}
-          onPress={() => {
-            navigation.navigate("logout");
-            navigation.closeDrawer();
-          }}
-        />
+          onPress={() =>{
+            signOutUser()
+            navigation.navigate('Login')
+          }}/>
+
+
+        <TouchableOpacity style={styles.darkModeButton}>
+         
+          <Entypo 
+          name={darkMode ? "light-up" : "moon"} 
+          color={darkMode ? "white" : "black"} 
+          size={24} 
+          onPress={() => darkMode ? setDarkmode(false) : setDarkmode(true)} />
+        </TouchableOpacity>
       </View>
     </View>
   );
