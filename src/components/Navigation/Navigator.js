@@ -6,14 +6,10 @@ import React, { useEffect, useState } from 'react'
 import  {auth}  from '../../firebase/config'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-
 import {createDrawerNavigator} from '@react-navigation/drawer' 
-
 import RegistrationScreen from "../../screen/auth/Registration"
 import LoginScreen from "./../../screen/auth/LoginScreen"
 import HomeScreen from "../../screen/Home/HomeScreen"
-
-
 import CategoriesScreen from '../../screen/Categories/CategoriesScreen';
 import RecipeScreen from '../../screen/Recipe/RecipeScreen';
 import RecipesListScreen from '../../screen/RecipesList/RecipesListScreen';
@@ -21,6 +17,9 @@ import DrawerContainer from '../../screen/DrawerContainer/DrawerContainer';
 import IngredientScreen from '../../screen/Ingredient/IngredientScreen';
 import SearchScreen from '../../screen/Search/SearchScreen'
 import IngredientsDetailsScreen from '../../screen/IngredientsDetails/IngredientsDetailsScreen'
+import  ProfileScreen from  "../../screen/Profile/profileScreen"
+import Logout from "../../screen/Logout/LogoutScreen"
+import settingScreen from '../../screen/settings/SettingScreen';
 
 LogBox.ignoreLogs([
   "Setting a timer",
@@ -74,7 +73,9 @@ export default function App() {
       <AppStack.Screen name='Ingredient' component={IngredientScreen} />
       <AppStack.Screen name='Search' component={SearchScreen} />
       <AppStack.Screen name='IngredientsDetails' component={IngredientsDetailsScreen} />
-        
+        <AppStack.Screen name='profile' component={ProfileScreen}/>
+        <AppStack.Screen name='setting'component={settingScreen}/>
+        <AppStack.Screen name='logout' component={Logout}/>
       </AppStack.Navigator>
     )
   }
@@ -93,15 +94,29 @@ export default function App() {
 
   }
   const Drawer = createDrawerNavigator();
-
+  function DrawerStack() {
+    return(
+      <Drawer.Navigator
+        drawerPosition='left'
+        initialRouteName='Main'
+        drawerStyle={{
+          width: 250
+        }}
+        screenOptions={{headerShown: false}}
+        drawerContent={({navigation})=> <DrawerContainer navigation={navigation}/>}
+      >
+        <Drawer.Screen name='Main' component={AppHome} />
+      </Drawer.Navigator>
+    )
+  } 
  
   
   return (
 
 <NavigationContainer>
 
-  {user ? <AppHome/> : <Auth/>}
   
+ {user?  <DrawerStack/>:<Auth/>}
 
 
 </NavigationContainer>
