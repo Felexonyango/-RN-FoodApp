@@ -55,11 +55,11 @@ export default function RegistrationScreen({navigation}) {
                 keyboardShouldPersistTaps="always">
                 <Image
                     style={styles.logo}
-                    source={require('../../../assets/icon.png')}
+                    source={require('../../../assets/food.jpeg')}
                 />
                 <TextInput
                     style={styles.input}
-                    placeholder='Full Name'
+                    placeholder=' Name'
                     placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setFullName(text)}
                     value={fullName}
