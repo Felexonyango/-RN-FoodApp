@@ -1,22 +1,17 @@
 import React, { useLayoutEffect } from "react";
 import { FlatList, Text, View, TouchableHighlight, Image } from "react-native";
 import styles from "./styles";
-import { recipes } from "../../data/dataArrays";
-import MenuImage from "../../components/MenuImage/MenuImage";
-import { getCategoryName } from "../../data/MockDataAPI";
+import { getRecipes, getCategoryName } from "../../data/MockDataAPI";
 
-export default function HomeScreen(props) {
-  const { navigation } = props;
+export default function RecipesListScreen(props) {
+  const { navigation, route } = props;
+
+  const item = route?.params?.category;
+  const recipesArray = getRecipes(item.id);
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: () => (
-        <MenuImage
-          onPress={() => {
-            navigation.openDrawer();
-          }}
-        />
-      ),
+      title: route.params?.title,
       headerRight: () => <View />,
     });
   }, []);
@@ -37,7 +32,7 @@ export default function HomeScreen(props) {
 
   return (
     <View>
-      <FlatList vertical showsVerticalScrollIndicator={false} numColumns={2} data={recipes} renderItem={renderRecipes} keyExtractor={(item) => `${item.recipeId}`} />
+      <FlatList vertical showsVerticalScrollIndicator={false} numColumns={2} data={recipesArray} renderItem={renderRecipes} keyExtractor={(item) => `${item.recipeId}`} />
     </View>
   );
 }

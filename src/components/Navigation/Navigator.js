@@ -6,9 +6,21 @@ import React, { useEffect, useState } from 'react'
 import  {auth}  from '../../firebase/config'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+
+import {createDrawerNavigator} from '@react-navigation/drawer' 
+
 import RegistrationScreen from "../../screen/auth/Registration"
 import LoginScreen from "./../../screen/auth/LoginScreen"
 import HomeScreen from "../../screen/Home/HomeScreen"
+
+
+import CategoriesScreen from '../../screen/Categories/CategoriesScreen';
+import RecipeScreen from '../../screen/Recipe/RecipeScreen';
+import RecipesListScreen from '../../screen/RecipesList/RecipesListScreen';
+import DrawerContainer from '../../screen/DrawerContainer/DrawerContainer';
+import IngredientScreen from '../../screen/Ingredient/IngredientScreen';
+import SearchScreen from '../../screen/Search/SearchScreen'
+import IngredientsDetailsScreen from '../../screen/IngredientsDetails/IngredientsDetailsScreen'
 
 LogBox.ignoreLogs([
   "Setting a timer",
@@ -44,12 +56,29 @@ export default function App() {
   }
   const AppHome = () => {
     return (
-      <AppStack.Navigator>
+      <AppStack.Navigator
+  
+      screenOptions={{
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          textAlign: 'center',
+          alignSelf: 'center',
+          flex: 1,
+        }
+    }}>
+      
         <AppStack.Screen name='Home'component={HomeScreen}/>
+      <AppStack.Screen name='Categories' component={CategoriesScreen}/>
+      <AppStack.Screen name='Recipe' component={RecipeScreen}/>
+      <AppStack.Screen name='RecipesList' component={RecipesListScreen} />
+      <AppStack.Screen name='Ingredient' component={IngredientScreen} />
+      <AppStack.Screen name='Search' component={SearchScreen} />
+      <AppStack.Screen name='IngredientsDetails' component={IngredientsDetailsScreen} />
         
       </AppStack.Navigator>
     )
   }
+
 
   const Auth =()=>{
     return(
@@ -63,11 +92,19 @@ export default function App() {
    
 
   }
+  const Drawer = createDrawerNavigator();
+
+ 
+  
   return (
-    
+
 <NavigationContainer>
-{user ? <AppHome/> : <Auth/>}
+
+  {user ? <AppHome/> : <Auth/>}
+  
+
 
 </NavigationContainer>
+  
   )
 } 
